@@ -1,9 +1,27 @@
 .header {
   width: 100vw;
-  background-color: #fff;
+  background-color: #222831;
   padding: 1rem 2rem;
+  display: flex;
 
-  ul {
-    
+  a {
+  color: #EEEEEE;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-decoration: none;
+  margin: 1rem;
+  transition: color .1s ease-in-out;
+
+  &:hover {
+    color: #00ADB5;
   }
+
+  &:active {
+    color: #393E46;
+  }
+  }
+}
+
+.active {
+  border-bottom: 0.2rem solid #00ADB5;
 }
