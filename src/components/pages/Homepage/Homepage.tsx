@@ -1,7 +1,11 @@
-import { FC } from 'react'
+import { FC } from "react";
+import styles from "./Homepage.module.scss";
 
 const Homepage: FC = () => {
-  return <div>Homepage</div>
-}
+  return (
+    <div className={styles.wrapper}>
+    </div>
+  );
+};
 
-export default Homepage
+export default Homepage;

@@ -1,0 +1,35 @@
+.container {
+  div[data-testid="flowbite-tooltip-target"]:nth-child(1) {
+    height: max-content;
+    button {
+      width: 10rem;
+      height: 3rem;
+
+      span {
+        padding: 0;
+      }
+    }
+  }
+}
+
+.input {
+  div {
+    div {
+      input {
+        background-color: rgba($color: #000000, $alpha: 0);
+        border: none;
+        border-radius: 0;
+        border-bottom: 0.12rem solid #222831;
+        font-size: 1rem;
+        color: rgba($color: #e1e1e1, $alpha: 1.0);
+        font-weight: 600;
+        outline: none;
+        padding-left: 0;
+
+        &:focus {
+          border-bottom: 0.12rem solid #222831;
+        }
+      }
+    }
+  }
+}
