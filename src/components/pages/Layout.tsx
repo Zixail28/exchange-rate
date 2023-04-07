@@ -8,11 +8,13 @@ import Main from "./staticComponents/Main/Main";
 const Layout: FC = () => {
   return (
     <>
-      <Header />
-      <Main>
-        <Outlet />
-      </Main>
-      <Footer />
+      <div className="flex flex-col h-screen">
+        <Header />
+        <Main>
+          <Outlet />
+        </Main>
+        <Footer />
+      </div>
     </>
   );
 };

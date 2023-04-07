@@ -1,10 +1,9 @@
 import { FC } from 'react'
 import Form from '../../UI/Form/Form';
-import styles from "./ExchangeRatePage.module.scss";
 
 const ExchangeRatePage: FC = () => {
   return (
-    <div className={styles.wrapper}>
+    <div className="mx-auto max-w-7xl justify-center flex mt-10">
       <Form />
     </div>
   );

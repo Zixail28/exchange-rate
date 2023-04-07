@@ -4,14 +4,7 @@ import styles from "./Form.module.scss";
 import { Dropdown, Label, TextInput } from "flowbite-react";
 import { Icons } from "../Icons/Icons";
 import CurrencyCell from "./CurrencyCell/CurrencyCell";
-
-const countries = ["Belarus", "Russia", "Poland"];
-const actions: {
-  [key: string]: chooses;
-} = {
-  "Я хочу продать": "Я хочу купить",
-  "Я хочу купить": "Я хочу продать",
-};
+import { instance } from "../../data/api/axios";
 
 const currencies = {
   BY: () => (
@@ -46,40 +39,50 @@ const currencies = {
   ),
 };
 
+
+async function exchangeRate(currencyCode: string) {
+  const { data } = await instance.get(`${currencyCode}?parammode=2`);
+  return data.Cur_OfficialRate / data.Cur_Scale;
+}
+
 const currencyCalc: countryCurrency[] = [{
   countryCode: "BY",
   countryName: "Belarus",
   iconCode: Icons["Belarus"],
   currencyCode: "BYN",
-  dollarExchangeRate: 0.363,
+  currencySymbol: "BYN",
+  bynExchangeRate: 1,
 },{
   countryCode: "RU",
   countryName: "Russia",
   iconCode: Icons["Russia"],
   currencyCode: "RUB",
-  dollarExchangeRate: 0.01259,
+  currencySymbol: "\u20BD",
+  bynExchangeRate: await exchangeRate("rub"),
 },{
   countryCode: "PL",
   countryName: "Poland",
   iconCode: Icons["Poland"],
   currencyCode: "PLN",
-  dollarExchangeRate: 0.2333,
+  currencySymbol: "\u007A\u0142",
+  bynExchangeRate: await exchangeRate("pln"),
 },{
   countryCode: "US",
   countryName: "USA",
   iconCode: Icons["USA"],
   currencyCode: "USD",
-  dollarExchangeRate: 1,
+  currencySymbol: "\u0024",
+  bynExchangeRate: await exchangeRate("usd"),
 },{
   countryCode: "EU",
   countryName: "Europian",
   iconCode: Icons["Europian"],
   currencyCode: "EUR",
-  dollarExchangeRate: 1.09,
+  currencySymbol: "\u20AC",
+  bynExchangeRate: await exchangeRate("eur"),
 }];
 
 const Form: FC = () => {
-  const [actionState, setActionState] = useState<chooses>("Я хочу продать");
   const [currencyState, setCurrencyState] =
     useState<keyof typeof currencies>("BY");
   const [calculatedCurrenciesState, setCalculatedCurrenciesState] = useState<countryCurrency[]>([]);
@@ -89,32 +92,19 @@ const Form: FC = () => {
     setCalculatedCurrenciesState(currencyCalc.filter((e) => e.countryCode !== currencyState))
   }, [currencyState]);
 
-  function handleChangeAction(action: chooses) {
-    setActionState(action);
-  }
   function handleChangeCurrency(action: keyof typeof currencies) {
     setCurrencyState(action);
+    setInputState("");
   }
   function handleInputChange(event: any) {
     setInputState(event.target.value);
-    console.log(event.target.value);
   }
 
   return (
     <div
       className={`flex h-80 w-96 ${styles.container} relative shadow flex-col`}
     >
-      <header className="flex justify-center w-full h-max shadow py-2">
-        <Dropdown label={actionState} color="dark">
-          <Dropdown.Item
-            onClick={() => handleChangeAction(actions[actionState])}
-            className="hover:bg-slate-200"
-          >
-            {actions[actionState]}
-          </Dropdown.Item>
-        </Dropdown>
-      </header>
-      <main className="flex py-2 flex-col h-full shadow">
+      <main className="flex py-2 flex-col h-full shadow-2xl border-2 border-gray-800">
         <header className="flex w-full justify-around items-center">
           <Dropdown
             label={currencies[currencyState]()}
@@ -165,6 +155,7 @@ const Form: FC = () => {
               required={true}
               className="w-36"
               value={inputState}
+              autoComplete="off"
               onChange={handleInputChange}
             />
             <Label
@@ -175,8 +166,11 @@ const Form: FC = () => {
           </div>
         </header>
         <main className="my-5 flex flex-col justify-between h-full">
-          <CurrencyCell data={calculatedCurrenciesState} count={+inputState * currencyCalc.find((e) => e.countryCode === currencyState)!.dollarExchangeRate} />
+          <CurrencyCell data={calculatedCurrenciesState} count={+inputState * currencyCalc.find((e) => e.countryCode === currencyState)!.bynExchangeRate} />
         </main>
+        <footer className="text-sm text-gray-500 px-2">
+          * данные по актуальному курсу НБ РБ.
+        </footer>
       </main>
     </div>
   );

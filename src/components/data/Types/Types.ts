@@ -4,5 +4,6 @@ export type countryCurrency = {
   countryName: string;
   iconCode: () => JSX.Element;
   currencyCode: string;
-  dollarExchangeRate: number;
+  currencySymbol: string;
+  bynExchangeRate: number;
 };

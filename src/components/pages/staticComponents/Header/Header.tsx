@@ -1,15 +1,16 @@
 import { FC } from "react";
 import { NavLink } from "react-router-dom";
-import styles from "./Header.module.scss";
+
+const sampleStylesA = "hover:text-cyan-500 active:text-gray-600 transition-colors duration-300 ease-in-out m-3"
 
 const Header: FC = () => {
   const className = ({ isActive }: { isActive: boolean }) =>
-    isActive ? styles.active : "";
+    isActive ? sampleStylesA + " border-b-4 border-cyan-500 border-solid" : sampleStylesA;
 
   return (
-    <header className={styles.header}>
+    <header className="w-full bg-gray-800 py-4 px-8 flex flex-col">
       <nav>
-        <ul>
+        <ul className="text-white text-2xl font-bold">
           <NavLink to={"/"} className={className}>
             Home
           </NavLink>

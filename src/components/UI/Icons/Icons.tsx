@@ -30,7 +30,7 @@ export const Icons = {
         <path
           d="M0 450h7410m0 600H0m0 600h7410m0 600H0m0 600h7410m0 600H0"
           stroke="#fff"
-          stroke-width="300"
+          strokeWidth="300"
         />
         <path fill="#3c3b6e" d="M0 0h2964v2100H0z" />
         <g fill="#fff">
