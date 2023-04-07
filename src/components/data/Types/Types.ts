@@ -7,3 +7,5 @@ export type countryCurrency = {
   currencySymbol: string;
   bynExchangeRate: number;
 };
+
+export type countryCodeType = countryCurrency['countryCode'];
