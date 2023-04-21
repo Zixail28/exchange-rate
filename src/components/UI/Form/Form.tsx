@@ -1,32 +1,36 @@
-import { FC, useEffect, useState } from "react";
-import { countryCodeType, countryCurrency } from "../../data/Types/Types";
+import { FC, useEffect } from "react";
+import { countryCodeType } from "../../data/Types/Types";
 import styles from "./Form.module.scss";
 import { Label, TextInput } from "flowbite-react";
 import CurrencyCell from "./CurrencyCell/CurrencyCell";
 import { currencyList } from "../../data/currency/currencyList";
 import DropdownCurrencyList from "./DropdownCurrencyList/DropdownCurrencyList";
+import { useAppSelector, useAppDispatch } from "../../app/redux/hooks/hooks";
+import { exchangeRateSlice } from "../../app/redux/exchangeRateSlice/exchangeRateSlice";
 
 const Form: FC = () => {
-  const [currencyState, setCurrencyState] =
-    useState<countryCodeType>("BY");
-  const [inputState, setInputState] = useState<string>("");
-  const [calculatedCurrenciesState, setCalculatedCurrenciesState] = useState<
-    countryCurrency[]
-  >([]);
+  const { calculatedCurrencies, currency, input } = useAppSelector(
+    (state) => state.exchangeRateReducer
+  );
+  const { setCalculatedCurrenciesState, setCurrencyState, setInputState } =
+    exchangeRateSlice.actions;
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    setCalculatedCurrenciesState(
-      currencyList.filter((e) => e.countryCode !== currencyState)
+    dispatch(
+      setCalculatedCurrenciesState(
+        currencyList.filter((e) => e.countryCode !== currency)
+      )
     );
-  }, [currencyState]);
+  }, [currency]);
 
   function handleInputChange(event: any) {
-    setInputState(event.target.value);
+    if (!/[a-zA-Z]+/g.test(event.target.value)) dispatch(setInputState(event.target.value));
   }
-  
+
   function handleChangeCurrency(action: countryCodeType) {
-    setCurrencyState(action);
-    setInputState("");
+    dispatch(setCurrencyState(action));
+    dispatch(setInputState(""));
   }
 
   return (
@@ -35,7 +39,11 @@ const Form: FC = () => {
     >
       <main className="flex py-2 flex-col h-full shadow-2xl border-2 border-gray-800">
         <header className="flex w-full justify-around items-center">
-            <DropdownCurrencyList data={currencyList} handleChange={handleChangeCurrency} state={currencyState} />
+          <DropdownCurrencyList
+            data={currencyList}
+            handleChange={handleChangeCurrency}
+            state={currency}
+          />
           <div className={`block ${styles.input}`}>
             <TextInput
               id="count"
@@ -43,7 +51,7 @@ const Form: FC = () => {
               placeholder="Введите кол-во"
               required={true}
               className="w-36"
-              value={inputState}
+              value={input}
               autoComplete="off"
               onChange={handleInputChange}
             />
@@ -56,10 +64,10 @@ const Form: FC = () => {
         </header>
         <main className="my-5 flex flex-col justify-between h-full">
           <CurrencyCell
-            data={calculatedCurrenciesState}
+            data={calculatedCurrencies}
             count={
-              +inputState *
-              currencyList.find((e) => e.countryCode === currencyState)!
+              +input *
+              currencyList.find((e) => e.countryCode === currency)!
                 .bynExchangeRate
             }
           />

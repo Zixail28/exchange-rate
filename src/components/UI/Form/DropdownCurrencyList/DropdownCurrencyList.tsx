@@ -19,8 +19,9 @@ const DropdownCurrencyList: FC<DropdownCurrencyListProps> = ({ data, handleChang
       color="dark"
       className="w-36 bg-gray-800"
     >
-      {data.map((e) => (
+      {data.map((e, i) => (
         <Dropdown.Item
+          key={i}
           onClick={() => handleChange(e.countryCode)}
           className="hover:bg-slate-200"
         >
