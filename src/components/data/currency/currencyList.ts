@@ -1,4 +1,3 @@
-import { Icons } from "../../UI/Icons/Icons";
 import { countryCurrency } from "../Types/Types";
 import { instance } from "../api/axios";
 
@@ -11,7 +10,6 @@ export const currencyList: countryCurrency[] = [
   {
     countryCode: "BY",
     countryName: "Belarus",
-    iconCode: Icons["Belarus"],
     currencyCode: "BYN",
     currencySymbol: "BYN",
     bynExchangeRate: 1,
@@ -19,7 +17,6 @@ export const currencyList: countryCurrency[] = [
   {
     countryCode: "RU",
     countryName: "Russia",
-    iconCode: Icons["Russia"],
     currencyCode: "RUB",
     currencySymbol: "\u20BD",
     bynExchangeRate: await exchangeRate("rub"),
@@ -27,7 +24,6 @@ export const currencyList: countryCurrency[] = [
   {
     countryCode: "PL",
     countryName: "Poland",
-    iconCode: Icons["Poland"],
     currencyCode: "PLN",
     currencySymbol: "\u007A\u0142",
     bynExchangeRate: await exchangeRate("pln"),
@@ -35,7 +31,6 @@ export const currencyList: countryCurrency[] = [
   {
     countryCode: "US",
     countryName: "USA",
-    iconCode: Icons["USA"],
     currencyCode: "USD",
     currencySymbol: "\u0024",
     bynExchangeRate: await exchangeRate("usd"),
@@ -43,7 +38,6 @@ export const currencyList: countryCurrency[] = [
   {
     countryCode: "EU",
     countryName: "Europian",
-    iconCode: Icons["Europian"],
     currencyCode: "EUR",
     currencySymbol: "\u20AC",
     bynExchangeRate: await exchangeRate("eur"),

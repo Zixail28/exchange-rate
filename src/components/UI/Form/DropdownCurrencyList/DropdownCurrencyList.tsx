@@ -1,6 +1,7 @@
 import { Dropdown } from "flowbite-react";
 import { FC } from "react";
 import { countryCurrency } from "../../../data/Types/Types";
+import { Icons } from "../../Icons/Icons";
 
 type DropdownCurrencyListProps = {
   data: countryCurrency[];
@@ -13,8 +14,8 @@ const DropdownCurrencyList: FC<DropdownCurrencyListProps> = ({ data, handleChang
     <>
     <Dropdown
       label={<>
-        {data.find((e) => e.countryCode === state)?.iconCode()}
-        {data.find((e) => e.countryCode === state)?.currencyCode}
+        {Icons[data.find((e) => e.countryCode === state)!.countryName]()}
+        {data.find((e) => e.countryCode === state)!.currencyCode}
       </>}
       color="dark"
       className="w-36 bg-gray-800"
@@ -25,7 +26,7 @@ const DropdownCurrencyList: FC<DropdownCurrencyListProps> = ({ data, handleChang
           onClick={() => handleChange(e.countryCode)}
           className="hover:bg-slate-200"
         >
-          {e.iconCode()}
+          {Icons[e.countryName]()}
           {e.currencyCode}
         </Dropdown.Item>
       ))}

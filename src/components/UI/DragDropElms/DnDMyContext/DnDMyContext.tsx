@@ -1,21 +1,20 @@
 import { FC, PropsWithChildren, useState } from "react";
 import { DndContext } from "@dnd-kit/core";
-
-type positionType = {
-  x: number;
-  y: number;
-};
+import { useAppDispatch, useAppSelector } from "../../../app/redux/hooks/hooks";
+import { exchangeRateSlice } from "../../../app/redux/exchangeRateSlice/exchangeRateSlice";
 
 const DnDMyContext: FC<PropsWithChildren<unknown>> = ({ children }) => {
-  const [position, setPosition] = useState<positionType>({
-    x: 0,
-    y: 0,
-  });
+  const position = useAppSelector(
+    (state) => state.exchangeRateReducer.position
+  );
+  const setPosition = exchangeRateSlice.actions.setPosition;
+  const dispatch = useAppDispatch();
+
   const handleDragEnd = (event: any) => {
-    console.log(event);
     const { delta } = event;
-    setPosition({ x: delta.x, y: delta.y });
+    dispatch(setPosition({ x: position.x + delta.x, y: position.y + delta.y }));
   };
+
   return <DndContext onDragEnd={handleDragEnd}>{children}</DndContext>;
 };
 

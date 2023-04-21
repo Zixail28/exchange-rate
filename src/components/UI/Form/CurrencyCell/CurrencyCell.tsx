@@ -12,7 +12,7 @@ const CurrencyCell: FC<{
       {data.map((e,i) => (
         <div className="flex justify-between px-10 font-bold text-white" key={i}>
           <div className="flex items-center">
-            <div>{e.iconCode()}</div>
+            <div>{Icons[e.countryName]()}</div>
             {e.currencyCode}
           </div>
           <div className="">{(count ? (count / e.bynExchangeRate).toFixed(2) : 0) + " " + e.currencySymbol}</div>

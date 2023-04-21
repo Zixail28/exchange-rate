@@ -3,7 +3,7 @@ import Form from '../../UI/Form/Form';
 
 const ExchangeRatePage: FC = () => {
   return (
-    <div className="mx-auto max-w-7xl justify-center flex mt-10">
+    <div className="mx-auto max-w-7xl justify-center flex w-auto h-full">
       <Form />
     </div>
   );

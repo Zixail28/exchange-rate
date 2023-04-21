@@ -1,8 +1,7 @@
 export type chooses = "Я хочу продать" | "Я хочу купить";
 export type countryCurrency = {
   countryCode: string;
-  countryName: string;
-  iconCode: () => JSX.Element;
+  countryName: "Belarus" | "Russia" | "Poland" | "USA" | "Europian";
   currencyCode: string;
   currencySymbol: string;
   bynExchangeRate: number;

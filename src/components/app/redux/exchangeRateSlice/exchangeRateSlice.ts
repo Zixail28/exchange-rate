@@ -5,12 +5,20 @@ interface IInitialState {
   currency: countryCodeType,
   input: string,
   calculatedCurrencies: countryCurrency[],
+  position: {
+    x: number,
+    y: number,
+  },
 }
 
 const initialState: IInitialState = {
   currency: "BY",
   input: "",
   calculatedCurrencies: [],
+  position: {
+    x: 10,
+    y: 10,
+  },
 }
 
 export const exchangeRateSlice = createSlice({
@@ -25,6 +33,9 @@ export const exchangeRateSlice = createSlice({
     },
     setCalculatedCurrenciesState: (state, action) => {
       state.calculatedCurrencies = action.payload;
+    },
+    setPosition: (state, action) => {
+      state.position = action.payload;
     }
   }
 });
